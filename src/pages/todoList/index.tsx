@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react';
 import { useSelector } from '../../modal';
+import services from '../../services';
 
 export function TodoList() {
   const { todoList, addItem, removeItem } = useSelector('todoList');
+  const { getData } = useSelector('services');
 
   const addTodoList = useCallback(() => {
     const id = Math.max(...todoList.map(item => item.id), 0) + 1;
@@ -15,9 +17,10 @@ export function TodoList() {
 
   const onRemove = useCallback(
     (id: number) => {
-      removeItem(id);
+      // removeItem(id);
+      getData(services.user.login('18320665011', '41841800'))
     },
-    [removeItem]
+    [getData]
   );
 
   return (
