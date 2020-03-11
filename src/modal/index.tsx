@@ -1,6 +1,5 @@
 import { createReactionStore } from './reaction';
 import { useTodoList } from './useTodoList';
-import { useServices } from './useServices';
 
 export const {
   Provider,
@@ -8,7 +7,6 @@ export const {
   useSelector,
   useImmerState
 } = createReactionStore({
-  todoList: useTodoList,
-  services: useServices
+  todoList: useTodoList
 });
 0

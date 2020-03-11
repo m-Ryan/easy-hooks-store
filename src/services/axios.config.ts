@@ -19,14 +19,14 @@ axiosInstance.interceptors.response.use(function <T>(res: AxiosResponse<T>) {
 
 export const request = {
   async get<T>(url: string, config?: AxiosRequestConfig | undefined) {
-    return ()=>axiosInstance.get<T>(url, config).then(data => data.data);
+    return axiosInstance.get<T>(url, config).then(data => data.data);
   },
   async post<T>(
     url: string,
     data?: any,
     config?: AxiosRequestConfig | undefined
   ) {
-    return ()=>axiosInstance.post<T>(url, data, config).then(data => data.data);
+    return axiosInstance.post<T>(url, data, config).then(data => data.data);
   }
 };
 

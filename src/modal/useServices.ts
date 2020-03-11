@@ -1,43 +1,25 @@
-import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import { useState } from 'react';
 
+type UnPromise<T> = T extends Promise<infer R>  ? R : T;
 
-export function useServices() {
+export function useServices<T extends (...args: any)=>any>(serviceHandler: T) {
   const [loading, setLoading] = useState<boolean>(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<UnPromise<ReturnType<T>>>(null);
   const [error, setError] = useState<any>(null);
 
-  const getData = (fn: any) => {
+  const getData = (...payload:  Parameters<T>): ReturnType<T> => {
     setLoading(true)
-    return fn
+    return serviceHandler(payload)
       .then(setResult)
       .catch(setError)
       .finally(() => setLoading(false));
   }
 
-  const postData = () => {
-
-  }
-
   return {
-    getData
+    getData,
+    loading,
+    error, 
+    result
   }
 
 }
-
-// getMenu(): Promise<IAppMenuItem[]> {
-//     return Promise.resolve([
-//       {
-//         name: '数据模板',
-//         icon: 'bar-chart',
-//         isOpen: true,
-//         children: [
-//           {
-//             name: '数据模板',
-//             url: '/'
-//           }
-
-//         ]
-//       }
-//     ])
-//   }
