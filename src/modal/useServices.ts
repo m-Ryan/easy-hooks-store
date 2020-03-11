@@ -4,7 +4,7 @@ type UnPromise<T> = T extends Promise<infer R>  ? R : T;
 
 export function useServices<T extends (...args: any)=>any>(serviceHandler: T) {
   const [loading, setLoading] = useState<boolean>(false);
-  const [result, setResult] = useState<UnPromise<ReturnType<T>>>(null);
+  const [result, setResult] = useState<UnPromise<ReturnType<T>>>();
   const [error, setError] = useState<any>(null);
 
   const getData = (...payload:  Parameters<T>): ReturnType<T> => {
