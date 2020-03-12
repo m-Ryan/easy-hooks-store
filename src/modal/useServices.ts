@@ -7,10 +7,13 @@ export function useServices<T extends (...args: any)=>any>(serviceHandler: T) {
   const [result, setResult] = useState<UnPromise<ReturnType<T>>>();
   const [error, setError] = useState<any>(null);
 
-  const getData = (...payload:  Parameters<T>): ReturnType<T> => {
+  const getData = (...payload:  Parameters<T>) => {
     setLoading(true)
     return serviceHandler(payload)
-      .then(setResult)
+      .then((res: T)=> {
+        setResult(res);
+        return res;
+      })
       .catch(setError)
       .finally(() => setLoading(false));
   }
